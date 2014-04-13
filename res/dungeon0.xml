@@ -1,0 +1,490 @@
+<?xml version="1.0"?>
+<Room id="RID_DUNGEON_START"
+      description="A highly uncomfortable looking place. " 
+      name="Prison cell" >
+  <Items>
+    <Item id="ID_MATTRESS" name="mattress" description="Just a mattress." >
+      <Properties>
+	<Property id="bent" type="bool" value="false" />
+	<Property id="dirty" type="bool" value="true" />
+      </Properties>
+    </Item>
+
+    <Item id="ID_SKULLKEY" name="skeleton key" match="keys?|skullkey?|skull keys?" description="A key, with other head shaped as a skull">
+      <Properties>
+	<Property id="visible" type="bool" value="false" />
+      </Properties>
+    </Item>
+    
+    <Item id="ID_DUNGEON1DOOR" name="barred door" description="Sturdy looking iron bar door">
+      <Properties>
+	<Property id="locked" type="bool" value="true" />
+      </Properties>
+    </Item>
+  </Items>
+  
+  <Properties>
+    <Property id="visited" type="bool" value="false" />
+  </Properties>
+
+  <Overview>
+    
+You are in the place where you woke up. Rats make occasionally 
+a brief visit to this cell, but are too fast for you to catch. 
+Cell walls and bed are dirty, it seems that cleaner lady has 
+not paid a visit for a while.
+    
+There is a door leading to corridor from here.
+</Overview>
+
+</Room>
+
+<Room id="RID_DUNGEON_RUSTYDAGGER" 
+      description="A highly uncomfortable looking place." 
+      name="Prison cell">
+  <Items>
+    <Item id="ID_RUSTY_DAGGER" name="dagger" description="Rusty dagger" >
+      <Properties>
+	<Property id="attack" type="int" value="5" />
+	<Property id="pickup" type="bool" value="true" />
+      </Properties>
+    </Item>
+  </Items>
+  
+  <Properties>
+    <Property id="visited" type="bool" value="false" />
+  </Properties>
+  <Overview>
+    
+You are in a cell. This place looks like it has been deserted for a while.
+Spider webs and dust cover the room and stone floors.
+
+There is a door leading to corridor from here.
+
+  </Overview>
+
+</Room>
+
+<Room id="RID_DUNGEON_SKELETON" 
+      description="A highly uncomfortable looking place." 
+      name="Prison cell">
+  <Items>
+    <Item id="ID_SKELETON" name="skeleton" description="A living example of human skeletal system. No, wait..." >
+      <Properties>
+	<Property id="pickup" type="bool" value="false" />
+      </Properties>
+    </Item>
+    <Item id="ID_SMELLY_SOCKS" name="smellysocks" description="Rather foul-smelling pair of socks">
+    </Item>
+  </Items>
+
+  <Overview>
+    
+    You are in a cell. This place has had former tenant, and his remains are partially 
+    hanging from chains. Skeleton looks like it is about to collapse.
+    
+    There is a door leading to corridor from here.
+    
+  </Overview>
+
+</Room>
+
+<Room id="RID_DUNGEON_EMPTY" 
+      description="A highly uncomfortable looking place." 
+      name="Prison cell">
+  <Items>
+
+  </Items>
+  <Overview>
+
+This cell seems to be cleaner than others. Looks like it used as dressing room. 
+    
+There is door leading to corridor from here.
+
+  </Overview>
+</Room>
+
+<Room id="RID_DUNGEON_HALLWAY1" 
+      description="" 
+      name="Hallway"> 
+  <Items>
+    <Item id="ID_ROCK" name="rock" description="perfect geological example of a rock." />
+  </Items>
+  <Overview>
+    
+You are in a hallway connecting two cells to an end of 
+a corridor. Corridor continues further north, and south 
+wall of dungeon is standing firmly at its place.
+    
+Cell doors are to east and west from here.
+    
+  </Overview>
+</Room>
+<Room id="RID_DUNGEON_HALLWAY2" 
+      description="" 
+      name="Hallway">
+  <Overview>
+
+This is a corridor between various cells in a dungeon. 
+Corridor goes to north and south. In both ends you see 
+two cell doors in the shadows. 
+    
+  </Overview>
+</Room>
+
+<Room id="RID_DUNGEON_HALLWAY3" 
+      description="" 
+      name="Hallway">
+  <Overview>
+You are now in a hallway between dungeons. There seems to be couple 
+of dungeons on further in south end of corridor, and hallway 
+appears to be leading to stair case towards north. 
+
+There are dungeon doors to west and east.
+
+  </Overview>
+</Room>
+
+<Room id="RID_DUNGEON_HALLWAY_TORCH" 
+      description="There is a torch on the wall, giving faint light." 
+      name="Hallway">
+  <Items>
+    <Item id="ID_TORCH" name="Torch" description="A crude, but effective tool of illumination." >
+      <Properties>
+	<Property id="burning" type="bool" value="true"/>
+      </Properties>
+    </Item>
+  </Items>
+  <Overview>
+    
+You are in a corridor which provides dim illumination for this dungeon. 
+There is a holder for torch attached to wall.
+    
+Corrdor leads north and south. In north, you can see something 
+which resembles a stairs. In south you faintly see two cell doors.
+    
+  </Overview>
+</Room>
+
+<Room id="RID_STAIRS_LOW" 
+      description="There appears to be a quite a dark stairs rising up." 
+      name="Lower end of stairs ">
+  <Overview>
+    
+You are at the end of stairs. Stairs do not seem to have any 
+illumination and steps appear to be quite slippery of mold. 
+There is moisture, and you can hear some water dripping 
+nearby.
+
+Stairs rise towards north. To south, there seems to be a corridor.
+    
+  </Overview>
+  
+</Room>
+
+<Room id="RID_STAIRS_DARKNESS" 
+      description="A pitch black staircase." 
+      name="Middle of stairs "
+      class="stairway">
+  <Properties>
+    <Property id="deadly" type="bool" value="true" />
+    <Property id="deathmessage" type="string" value="
+						     
+In the pitch black darkness, your foot slips and you cling for anything that 
+might help you regain your balance. However, it is already too late. 
+
+You hit your head to a floor and die.
+"/>
+
+  </Properties>
+  <Overview>
+    
+Stairs seem to rise in almost pitch-black darkness.
+Lower end of stairs is towards south. Upper end of stairs 
+seems to be in north.
+    
+Moisture is annoying and stones are extremely 
+slippery at this point.
+    
+  </Overview>
+</Room>
+<Room id="RID_STAIRS_HIGH" 
+      description="Stairs appear to be leading somewhere." 
+      name="High end of stairs ">
+  <Overview>
+    
+You are at the upper end of stairs. Moisture seems to be gone and 
+stone steps feel manageable at this point.
+    
+Stairs lower to darkness towards south. Up north, there seems 
+to be some sort of hallway.
+    
+  </Overview>
+</Room>
+
+<Room id="RID_MAZE_START" 
+      description="This looks like a simple maze, it should not take long to finish." 
+      name="Maze">
+
+  <Overview>
+    
+You are at the entry point of seemingly simple set of hallways. 
+There is a wooden tablet on the wall, saying "Did you drop something?"
+You wonder what it means.    
+
+Hallways continue towards north. To south, there seems to be stairs.
+    
+  </Overview>
+</Room>
+<Room id="RID_MAZE_END" 
+      description="This looks like a simple maze, it should not take long to finish." 
+      name="Maze">
+  <Overview>
+
+You are at the entry point of seemingly simple set of hallways. 
+
+Hallways continue towards south. To north, there seems to be corridor that leads somewhere.
+
+  </Overview>
+</Room>
+<Room id="RID_GUARD_HALLWAY1" 
+      description="" 
+      name="Hallway">
+</Room>
+
+<Room id="RID_GUARD_HALLWAY2" 
+      description="" 
+      name="Hallway">
+</Room>
+
+<Room id="RID_GUARD_HALLWAY3" 
+      description="" 
+      name="Hallway">
+</Room>
+
+<Room id="RID_GUARD_HALLWAY4" 
+      description="" 
+      name="Hallway">
+</Room>
+
+<Room id="RID_GUARD" 
+      description="Somewhat vaguely guarded room." 
+      name="Guard room."
+      class="guard_room">
+  <Properties>
+    <Property id="deathmessage" type="string" value="
+As you step closer, guard wakes up and points his  spear at you! 
+
+'What are you doing here?!', he inquiries you with a very firm tone.
+
+As you turn to make your quick escape, he impales you with the spear. 
+
+'Say greetings to your maker...from Vlad!' 
+
+These are the last words you hear before agonizing pain strikes your 
+back. Shortly after, you fade into oblivion." />
+    <Property id="key_found_message" type="string" value="
+While carefully examining the guard and preventing him from waking up,
+you manage to get a hold something long and hard from his front pocket. 
+With great precision, you extract the item from guard's pocket. 
+
+You seem to be in luck - it is only a key.
+"/>
+    <Property id="guard_search_msg" type="string" value="
+Carefully watching the guard and trying not to wake him, you try out a 
+pocket that seems to be holding something and feel slightly hopeful 
+when your hand grabs something. With great precision, you extract the item
+from guard's pocket. 
+
+Unfortunately, you discovered only lint.
+"/>
+    <Property id="north_door_open_message" type="string" value="
+You open the door leading to north. Key vanishes into door. Here goes nothing!
+"/>
+    <Property id="south_door_open_message" type="string" value="
+You open the door leading to south. Key vanishes into door. Here goes nothing!
+"/>
+    <Property id="east_door_open_message" type="string" value="
+You open the door leading to east. Key vanishes into door. Here goes nothing!
+"/>
+  </Properties>
+  <Overview>
+    
+This room has a guard that is sleeping. You can hear 
+snoaring and see his beard moving along with air flow. 
+    
+There are identical doors to north, east and south 
+from here. To west, there exists a corridor.
+    
+  </Overview>
+  <Items>
+    <Item id="ID_DOOR_NORTH" name="door to north" description="" />
+    <Item id="ID_DOOR_EAST"  name="door to east" description="" />
+    <Item id="ID_DOOR_SOUTH" name="door to south" description="" />
+  </Items>
+</Room>
+
+<Room id="RID_LAVAPIT" 
+      description="There appears to be liquid hot burning magma in this room... Aargh!" 
+      name="Pit of death">
+ <Properties>
+    <Property id="deadly" type="bool" value="true" />
+    <Property id="deathmessage" type="string" value="
+
+Pssssshhhhhhhhhh....
+
+You land in a pool of liquid hot magma and vaporize without a trace.
+" />
+  </Properties>
+  <Overview>
+    
+This seems to be a trap! There is red-glowing magma 
+all over and no means to escape!
+    
+  </Overview>
+</Room>
+
+
+<Room id="RID_EXIT" 
+      description="Forest" 
+      name="Outside dungeon">
+  <Overview>
+
+There appears to be astonishing sunlight coming between 
+clouds. You feel marvellous! At last, you have escaped from 
+dungeon where you had gotten into from reasons unknown.
+
+Congratulations, you have finished the game!
+  </Overview>
+</Room>
+
+<Room id="RID_MAZE00" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE01" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE02" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor">
+  <Properties>
+    <Property id="north_exit_message" type="string" value="You feel dizzy."/>
+  </Properties>
+</Room>
+<Room id="RID_MAZE03" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE04" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE10" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE11" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE12" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE13" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE14" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE20" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE21" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE22" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE23" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE24" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE30" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE31" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE32" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE33" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE34" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE40" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE41" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE42" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE43" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Room id="RID_MAZE44" description="Seems like just any other corridor I have visited recently. Or have I been here before?" name="Corridor" />
+<Transitions>
+  <Transition from="RID_DUNGEON_HALLWAY1" to="RID_DUNGEON_HALLWAY2" direction="north" />
+  <Transition from="RID_DUNGEON_HALLWAY1" to="RID_DUNGEON_EMPTY" direction="west" />
+  <Transition from="RID_DUNGEON_HALLWAY1" to="RID_DUNGEON_SKELETON" direction="east" />
+  <Transition from="RID_DUNGEON_HALLWAY2" to="RID_DUNGEON_HALLWAY3" direction="north" />
+  <Transition from="RID_DUNGEON_HALLWAY3" to="RID_DUNGEON_RUSTYDAGGER" direction="west" />
+  <Transition from="RID_DUNGEON_HALLWAY3" to="RID_DUNGEON_START" direction="east" />
+  <Transition from="RID_DUNGEON_HALLWAY3" to="RID_DUNGEON_HALLWAY_TORCH" direction="north" />
+  <Transition from="RID_DUNGEON_HALLWAY_TORCH" to="RID_STAIRS_LOW" direction="north" />
+  <Transition from="RID_STAIRS_LOW" to="RID_STAIRS_DARKNESS" direction="north" />
+  <Transition from="RID_STAIRS_DARKNESS" to="RID_STAIRS_HIGH" direction="north" />
+  <Transition from="RID_STAIRS_HIGH" to="RID_MAZE_START" direction="north" />
+
+  <!-- Maze starts -->
+  <Transition from="RID_MAZE_START" to="RID_MAZE42" direction="north" />
+
+  <Transition from="RID_MAZE00" to="RID_MAZE01" direction="east" />
+  <Transition from="RID_MAZE01" to="RID_MAZE02" direction="east" />
+  <Transition from="RID_MAZE02" to="RID_MAZE03" direction="east" />
+  <Transition from="RID_MAZE03" to="RID_MAZE04" direction="east" />
+  
+  <Transition from="RID_MAZE10" to="RID_MAZE11" direction="east" />
+  <Transition from="RID_MAZE11" to="RID_MAZE12" direction="east" />
+  <Transition from="RID_MAZE12" to="RID_MAZE13" direction="east" />
+  <Transition from="RID_MAZE13" to="RID_MAZE14" direction="east" />
+
+  <Transition from="RID_MAZE20" to="RID_MAZE21" direction="east" />
+  <Transition from="RID_MAZE21" to="RID_MAZE22" direction="east" />
+  <Transition from="RID_MAZE22" to="RID_MAZE23" direction="east" />
+  <Transition from="RID_MAZE23" to="RID_MAZE24" direction="east" />
+
+  <Transition from="RID_MAZE30" to="RID_MAZE31" direction="east" />
+  <Transition from="RID_MAZE31" to="RID_MAZE32" direction="east" />
+  <Transition from="RID_MAZE32" to="RID_MAZE33" direction="east" />
+  <Transition from="RID_MAZE33" to="RID_MAZE34" direction="east" />
+
+  <Transition from="RID_MAZE40" to="RID_MAZE41" direction="east" />
+  <Transition from="RID_MAZE41" to="RID_MAZE42" direction="east" />
+  <Transition from="RID_MAZE42" to="RID_MAZE43" direction="east" />
+  <Transition from="RID_MAZE43" to="RID_MAZE44" direction="east" />
+
+  <Transition from="RID_MAZE00" to="RID_MAZE10" direction="south" />
+  <Transition from="RID_MAZE01" to="RID_MAZE11" direction="south" />
+  <Transition from="RID_MAZE02" to="RID_MAZE12" direction="south" />
+  <Transition from="RID_MAZE03" to="RID_MAZE13" direction="south" />
+  <Transition from="RID_MAZE04" to="RID_MAZE14" direction="south" />
+
+  <Transition from="RID_MAZE10" to="RID_MAZE20" direction="south" />
+  <Transition from="RID_MAZE11" to="RID_MAZE21" direction="south" />
+  <Transition from="RID_MAZE12" to="RID_MAZE22" direction="south" />
+  <Transition from="RID_MAZE12" to="RID_MAZE22" direction="south" />
+  <Transition from="RID_MAZE13" to="RID_MAZE23" direction="south" />
+  <Transition from="RID_MAZE14" to="RID_MAZE24" direction="south" />
+
+  <Transition from="RID_MAZE20" to="RID_MAZE30" direction="south" />
+  <Transition from="RID_MAZE21" to="RID_MAZE31" direction="south" />
+  <Transition from="RID_MAZE22" to="RID_MAZE32" direction="south" />
+  <Transition from="RID_MAZE23" to="RID_MAZE33" direction="south" />
+  <Transition from="RID_MAZE24" to="RID_MAZE34" direction="south" />
+
+  <Transition from="RID_MAZE30" to="RID_MAZE40" direction="south" />
+  <Transition from="RID_MAZE31" to="RID_MAZE41" direction="south" />
+  <Transition from="RID_MAZE32" to="RID_MAZE42" direction="south" />
+  <Transition from="RID_MAZE33" to="RID_MAZE43" direction="south" />
+  <Transition from="RID_MAZE34" to="RID_MAZE44" direction="south" />
+
+  <Transition from="RID_MAZE02" to="RID_MAZE12" oneway="true" direction="north" />
+  <Transition from="RID_MAZE02" to="RID_MAZE_END" oneway="true" direction="south" />
+  <!-- Maze ends -->
+
+  <Transition from="RID_MAZE_END" to="RID_GUARD_HALLWAY1" direction="north" />
+  <Transition from="RID_MAZE_END" to="RID_MAZE02" oneway="true" direction="south" />
+  <Transition from="RID_GUARD_HALLWAY1" to="RID_GUARD_HALLWAY2" direction="north" />
+  <Transition from="RID_GUARD_HALLWAY2" to="RID_GUARD_HALLWAY3" direction="east" />
+  <Transition from="RID_GUARD_HALLWAY3" to="RID_GUARD_HALLWAY4" direction="east" />
+  <Transition from="RID_GUARD_HALLWAY4" to="RID_GUARD" direction="east" />
+<!---
+  <Transition from="RID_GUARD" to="RID_EXIT" direction="north" />
+  <Transition from="RID_GUARD" to="RID_LAVAPIT" direction="east" />
+  <Transition from="RID_GUARD" to="RID_LAVAPIT" direction="south" />
+-->
+</Transitions>
+
+<OnStart>
+  <CurrentRoom id="RID_DUNGEON_START" />
+  <Story>
+    Once again, without any clue how, you find yourself locked in a dungeon 
+    for reasons unknown. This seems to happen too often, you think. 
+    
+    While moisture starts drilling in to your bones, a burning desire to see 
+    sunlight again emerges from corners of your mind. You want to escape. Preferably fast.
+
+    And so begins your Quick Escape!
+  </Story>
+</OnStart>
+
+<Player id="ID_PLAYER" name="Johnson" description="Valiant hero, trapped in dungeons for reasons unknown" >
+  <Items>
+    <Item id="ID_SLIPPERS" name="slippers" description="Comfortable-looking pair of pink slippers. Cute."/>
+  </Items>
+</Player>

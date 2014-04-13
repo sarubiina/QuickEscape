@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!-- various command aliases -->
+<Commands>
+  <Use match="use"/>
+  <Examine match="examine|search" />
+  <Quit match="quit" />
+  <Move match="go|move|walk|run|travel" />
+  <Take match="take|pick( up)?|grab"/>
+  <Drop match="drop|leave|throw" />
+  <Inventory match="inv(entory)?|items|item( list)?" />
+  <Look match="look|view|glance" />
+</Commands>

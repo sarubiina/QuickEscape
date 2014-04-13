@@ -1,0 +1,22 @@
+// Copyright anssi.grohn@karelia.fi (c) 2014.
+// Licensed under GPLv3.
+#include <RoomFactory.h>
+#include <GuardRoom.h>
+#include <Stairway.h>
+////////////////////////////////////////////////////////////////////////////////
+using namespace std;
+////////////////////////////////////////////////////////////////////////////////
+Room *
+RoomFactory::Create( const string & id)
+{
+  if ( id == "guard_room")
+  {
+    return new GuardRoom();
+  }
+  else if ( id == "stairway" )
+  {
+    return new Stairway();
+  }
+  return NULL;
+}
+////////////////////////////////////////////////////////////////////////////////
