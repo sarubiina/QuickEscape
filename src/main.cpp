@@ -19,8 +19,6 @@ int main(int argc, char **argv)
 		cout << "SDL_Init Error: " << SDL_GetError() << endl;
 		return 1;
 	}
-
-
 	//Load splash image into surface
 	SDL_Surface *splash = SDL_LoadBMP("res/splash.bmp");
 	if (splash == nullptr)
@@ -28,12 +26,11 @@ int main(int argc, char **argv)
 		cout << "SDL_LoadBMP Error: " << SDL_GetError() << endl;
 		return 1;
 	}
-
 	//Save splash images width and height into variables so they can be used
 	splashWidth = splash->w;
 	splashHeight = splash->h;
-
 	//Create a window, which size is the image's dimensions
+	// title for the window, the x and y position to create it at, the window width and height
 	SDL_Window *win = SDL_CreateWindow("QuickEscape", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 		splashWidth, splashHeight, SDL_WINDOW_SHOWN);
 	if (win == nullptr)
@@ -41,7 +38,6 @@ int main(int argc, char **argv)
 		cout << "SDL_CreateWindow Error: " << SDL_GetError() << endl;
 		return 1;
 	}
-
 	//Create a renderer
 	SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED |
 		SDL_RENDERER_PRESENTVSYNC);
@@ -50,7 +46,6 @@ int main(int argc, char **argv)
 		cout << "SDL_CreateRenderer Error: " << SDL_GetError() << endl;
 		return 1;
 	}
-
 	//Create texture from the surface
 	SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, splash);
 	SDL_FreeSurface(splash);
@@ -59,7 +54,6 @@ int main(int argc, char **argv)
 		cout << "SDL_CreateTextureFromSurface Error" << SDL_GetError() << endl;
 		return 1;
 	}
-
 	//Draw the splash texture
 	SDL_RenderClear(ren);
 	SDL_RenderCopy(ren, tex, NULL, NULL);

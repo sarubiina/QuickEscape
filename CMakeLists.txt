@@ -53,7 +53,6 @@ set( PROJECT_SRC
   src/Logger.cpp
   src/Commands.cpp
   src/Commands.h
-  src/draw_image.cpp
 )
 
 find_package(TinyXML2 REQUIRED)
