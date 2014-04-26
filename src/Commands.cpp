@@ -144,6 +144,49 @@ CommandUtils::Parse( const std::string & input )
   return new NullCommand();
 }
 ////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+Command *
+CommandUtils::Parse(const SDL_Event & event)
+{
+	switch (event.type)
+	{
+	case SDL_QUIT :
+		return new QuitCommand();
+		break;
+	case SDL_KEYDOWN:
+		if (event.key.keysym.sym == SDLK_ESCAPE)
+			return new QuitCommand();
+		break;
+		if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_w){
+			Room *current = g_Game.GetCurrentRoom();
+			MoveCommand *pCmd = new MoveCommand(North, current, current->GetNextRoom(North));
+			return pCmd;
+
+		}
+		break;
+		if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_s  ){
+			Room *current = g_Game.GetCurrentRoom();
+			MoveCommand *pCmd = new MoveCommand(South, current, current->GetNextRoom(South));
+			return pCmd;
+		}
+		break;
+		if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a ){
+			Room *current = g_Game.GetCurrentRoom();
+			MoveCommand *pCmd = new MoveCommand(West, current, current->GetNextRoom(West));
+			return pCmd;
+		}
+		break;
+		if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d ){
+			Room *current = g_Game.GetCurrentRoom();
+			MoveCommand *pCmd = new MoveCommand(East, current, current->GetNextRoom(East));
+			return pCmd;
+		}
+		break;
+		
+	}
+	return new NullCommand();
+}
+////////////////////////////////////////////////////////////////////////////////
 void 
 UseCommand::Execute( CommandHandler & handler )
 { 

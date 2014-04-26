@@ -53,6 +53,8 @@ set( PROJECT_SRC
   src/Logger.cpp
   src/Commands.cpp
   src/Commands.h
+  src/SDLApp.cpp
+  src/SDLApp.h
 )
 
 find_package(TinyXML2 REQUIRED)

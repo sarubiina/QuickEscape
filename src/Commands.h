@@ -6,6 +6,7 @@
 #include <Command.h>
 #include <string>
 #include <map>
+#include <SDL.h>
 ////////////////////////////////////////////////////////////////////////////////
 class Room;
 ////////////////////////////////////////////////////////////////////////////////
@@ -91,6 +92,7 @@ private:
 public:
   static void Load( const std::string & file );
   static Command * Parse( const std::string & input );
+  static Command * Parse(const SDL_Event & event);
   static bool Match( const std::string & cmd, const std::string & input);
 };
 ////////////////////////////////////////////////////////////////////////////////
