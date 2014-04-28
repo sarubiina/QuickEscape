@@ -13,7 +13,7 @@ public:
 	SDLApp();
 	virtual ~SDLApp();
 
-	void Init(const std::string & title, int width, int height, int flags = SDL_INIT_EVERYTHING);
+	void Init(const std::string & title, int width, int height, int flags = SDL_WINDOW_SHOWN);
 	void Render(SDL_Texture *tex, SDL_Rect src, SDL_Rect dst);
 	void HandleInput();
 };

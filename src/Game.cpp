@@ -63,7 +63,7 @@ Game::~Game()
 void Game::Play()
 {
 	//initialize graphig window
-	Init("Quick Escape", 400, 200);
+	Init("Quick Escape", 1000, 700);
 
   LoadMap("res/dungeon0.xml");
   CommandUtils::Load("res/commands.xml");
@@ -76,8 +76,6 @@ void Game::Play()
       throw NullKeyException(ss.str());
     }
   }
-
-  cout << m_Story << "\n";
 
   //load Splash image
   SDL_Surface * splash = SDL_LoadBMP("res/splash.bmp");
@@ -116,8 +114,8 @@ void Game::Play()
   int playerW, playerH;
   SDL_QueryTexture(playerImage, NULL, NULL, &playerW, &playerH);
   SDL_Rect srcplayerRect;
-  srcplayerRect.x = 16;
-  srcplayerRect.y = 2;
+  srcplayerRect.x = 113;
+  srcplayerRect.y = 16;
   srcplayerRect.w = 16;
   srcplayerRect.h = 16;
   //set player destination
@@ -136,6 +134,8 @@ void Game::Play()
   SDL_SetTextureBlendMode(playerImage, SDL_BLENDMODE_BLEND);
   SDL_SetTextureAlphaMod(playerImage, 250);
 
+  cout << m_Story << "\n";
+
   while ( GetProperty("running") ) 
   {
 	  SDL_RenderClear(renderer_);
@@ -153,13 +153,8 @@ void Game::Play()
     {    
       room.SetProperty("visited", true);
     }  
-    
-    cout << "> ";
 
-    string tmp;
-    getline(cin,tmp);
-    
-	HandleInput();
+	HandleInput(); //we handle the input from user
     
   }  
   SDL_DestroyTexture(playerImage);
@@ -487,16 +482,16 @@ Game::Execute(MoveCommand & cmd)
 
 	  //Player moves on screen
 	  if (cmd.m_Dir == North){
-		  playerRect.y -= playerRect.h;
+		  playerRect.y -= playerRect.h; //y coordinate - player heigth
 	  }
 	  if (cmd.m_Dir == South){
-		  playerRect.y += playerRect.h;
+		  playerRect.y += playerRect.h; //y coordinate + player heigth
 	  }
 	  if (cmd.m_Dir == West){
-		  playerRect.x -= playerRect.w;
+		  playerRect.x -= playerRect.w; //y coordinate - player weight
 	  }
 	  if (cmd.m_Dir == East){
-		  playerRect.x += playerRect.w;
+		  playerRect.x += playerRect.w; //y coordinate + player weight
 	  }
     }
     else

@@ -70,12 +70,10 @@ SDLApp::HandleInput()
 		{
 		case SDL_QUIT:
 		case SDL_KEYDOWN: 
-			{
 				Command *pCmd = CommandUtils::Parse(ev);
 				pCmd->Execute(*Game::GetInstance());
 				delete pCmd;
-			}
-			break;
+				break;
 		}
 	}
 	
