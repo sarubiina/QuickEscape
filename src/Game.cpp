@@ -77,73 +77,12 @@ void Game::Play()
     }
   }
 
-  //load Splash image
-  SDL_Surface * splash = SDL_LoadBMP("res/splash.bmp");
-  if (splash == NULL)
-	  throw runtime_error(SDL_GetError());
-
-  //content surface to the texture
-  SDL_Texture * splashImage = SDL_CreateTextureFromSurface(renderer_, splash);
-  SDL_FreeSurface(splash);
-  if (splash == NULL)
-	  throw runtime_error(SDL_GetError());
-
-  //book cover texture
-  SDL_Texture * coverImage = IMG_LoadTexture(renderer_, "res/cover.png");
-  if (coverImage == NULL) 
-	  throw runtime_error(SDL_GetError());
-
-  int coverW, CoverH;
-  SDL_QueryTexture(coverImage, NULL, NULL, &coverW, &CoverH);
-  SDL_Rect coverRect = { 0, 0, coverW, CoverH };
-
-  //Pages texture
-  SDL_Texture * pagesImage = IMG_LoadTexture(renderer_, "res/pages.png");
-  if (pagesImage == NULL)
-	  throw runtime_error(SDL_GetError());
-
-  int pagesW, pagesH;
-  SDL_QueryTexture(pagesImage, NULL, NULL, &pagesW, &pagesH);
-  SDL_Rect pagesRect = { 0, 0, pagesW, pagesH };
-
-  //player texture
-  SDL_Texture * playerImage = IMG_LoadTexture(renderer_, "res/player0.png");
-  if (pagesImage == NULL)
-	  throw runtime_error(SDL_GetError());
-
-  int playerW, playerH;
-  SDL_QueryTexture(playerImage, NULL, NULL, &playerW, &playerH);
-  SDL_Rect srcplayerRect;
-  srcplayerRect.x = 113;
-  srcplayerRect.y = 16;
-  srcplayerRect.w = 16;
-  srcplayerRect.h = 16;
-  //set player destination
-  playerRect.x = 320;
-  playerRect.y = 240;
-  playerRect.w = srcplayerRect.w * 2;
-  playerRect.h = srcplayerRect.h * 2;
-
-  //Set alpha blending for all textures
-  SDL_SetTextureBlendMode(coverImage, SDL_BLENDMODE_BLEND);
-  SDL_SetTextureAlphaMod(coverImage, 250);
-
-  SDL_SetTextureBlendMode(pagesImage, SDL_BLENDMODE_BLEND);
-  SDL_SetTextureAlphaMod(pagesImage, 250);
-
-  SDL_SetTextureBlendMode(playerImage, SDL_BLENDMODE_BLEND);
-  SDL_SetTextureAlphaMod(playerImage, 250);
-
   cout << m_Story << "\n";
 
   while ( GetProperty("running") ) 
   {
-	  SDL_RenderClear(renderer_);
-	  //render images to the screen
-	  Render(coverImage, coverRect, coverRect);
-	  Render(pagesImage, pagesRect, pagesRect);
-	  Render(playerImage, srcplayerRect, playerRect);
-	  SDL_RenderPresent(renderer_);
+	  Update();
+	  Render();
 
     Room & room = *GetCurrentRoom();
     bool visited;
@@ -155,11 +94,9 @@ void Game::Play()
     }  
 
 	HandleInput(); //we handle the input from user
-    
+
   }  
-  SDL_DestroyTexture(playerImage);
-  SDL_DestroyTexture(coverImage);
-  SDL_DestroyTexture(pagesImage);
+
   Save("res/dungeon0.xml");
 
 }
@@ -479,19 +416,22 @@ Game::Execute(MoveCommand & cmd)
       GetCurrentRoom()->Execute(cmd);
       SetCurrentRoom(pNext);
       GetCurrentRoom()->Execute(cmd);
-
-	  //Player moves on screen
-	  if (cmd.m_Dir == North){
-		  playerRect.y -= playerRect.h; //y coordinate - player heigth
-	  }
-	  if (cmd.m_Dir == South){
-		  playerRect.y += playerRect.h; //y coordinate + player heigth
-	  }
-	  if (cmd.m_Dir == West){
-		  playerRect.x -= playerRect.w; //y coordinate - player weight
-	  }
-	  if (cmd.m_Dir == East){
-		  playerRect.x += playerRect.w; //y coordinate + player weight
+	  switch (cmd.m_Dir)
+	  {
+	  case North:
+		  pos_.y -= pos_.h;
+		  break;
+	  case South:
+		  pos_.y += pos_.h;
+		  break;
+	  case East:
+		  pos_.x += pos_.w;
+		  break;
+	  case West:
+		  pos_.x -= pos_.w;
+		  break;
+	  default:
+		  break;
 	  }
     }
     else

@@ -6,7 +6,7 @@
 struct Updateable 
 {
   virtual ~Updateable(){}
-  virtual void Update() = 0;
+  virtual void Update(float seconds) = 0;
 };
 ////////////////////////////////////////////////////////////////////////////////
 #endif

@@ -38,7 +38,7 @@ public:
   boost::regex & GetNamePattern();
   void SetId(const std::string & id );
   const std::string & GetId() const;
-  void Update(){}
+  void Update(float seconds){}
 
   Inventory & GetItems();
   
