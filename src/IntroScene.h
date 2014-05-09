@@ -1,15 +1,14 @@
-#ifndef __IntroScene_h__
-#define __IntroScene_h__
+#ifndef __intro_scene_h__
+#define __intro_scene_h__
+#include "Scene.h"
 #include <SDL.h>
-#include <Scene.h>
-class IntroScene : public Scene
-{
+class IntroScene : public Scene {
 protected:
 	SDL_Texture * splash_;
 public:
 	void Init(SDL_Renderer * renderer);
 	void Update(float seconds);
-	void Render(SDL_Renderer * renderer);
+	void Render(SDL_Renderer * renerer);
 	void OnEvent(SDL_Event & ev);
 };
-#endif
+#endif 

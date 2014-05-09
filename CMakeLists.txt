@@ -24,7 +24,7 @@ if(WIN32)
   # its version does not match exactly the version of visual studio 
   # you are generating build files for.
   
-  set( BOOST_LIBRARYDIR "C:/Users/kata/Documents/koulutyot/SDL programming/boost_1_55_0/lib64-msvc-12.0")
+  set( BOOST_LIBRARYDIR "C:/Users/kata/Documents/koulutyot/SDL programming/boost_1_55_0/lib32-msvc-12.0")
 endif()
 
 set( PROJECT_SRC 
@@ -53,6 +53,7 @@ set( PROJECT_SRC
   src/Logger.cpp
   src/Commands.cpp
   src/Commands.h
+  src/Updateable.h
   src/SDLApp.cpp
   src/SDLApp.h
   src/Scene.cpp

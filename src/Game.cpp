@@ -416,22 +416,19 @@ Game::Execute(MoveCommand & cmd)
       GetCurrentRoom()->Execute(cmd);
       SetCurrentRoom(pNext);
       GetCurrentRoom()->Execute(cmd);
-	  switch (cmd.m_Dir)
-	  {
-	  case North:
-		  pos_.y -= pos_.h;
-		  break;
-	  case South:
-		  pos_.y += pos_.h;
-		  break;
-	  case East:
-		  pos_.x += pos_.w;
-		  break;
-	  case West:
-		  pos_.x -= pos_.w;
-		  break;
-	  default:
-		  break;
+	  
+	  //Player moves on screen
+	  if (cmd.m_Dir == North){
+		  playerRect.y -= playerRect.h;
+	  }
+	  if (cmd.m_Dir == South){
+		  playerRect.y += playerRect.h;
+	  }
+	  if (cmd.m_Dir == West){
+		  playerRect.x -= playerRect.w;
+	  }
+	  if (cmd.m_Dir == East){
+		  playerRect.x += playerRect.w;
 	  }
     }
     else
