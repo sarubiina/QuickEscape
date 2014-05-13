@@ -165,6 +165,7 @@ Room::Execute(MoveCommand & cmd)
 	cout << "You can see " << Game::MakeReadable(items) << " in here.";    
       }
     }
+	
   }
   else 
   {
@@ -179,6 +180,7 @@ Room::Execute(MoveCommand & cmd)
       cout << GetProperty("east_exit_message").As<string>() << ".";
   }
   cout << "\n";
+
 }
 
 

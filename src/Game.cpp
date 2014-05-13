@@ -9,7 +9,7 @@
 #include <Room.h>
 #include <RoomFactory.h>
 #include <Logger.h>
-#include <SDLApp.h>
+#include "SDLApp.h"
 ////////////////////////////////////////////////////////////////////////////////
 using namespace std;
 using namespace tinyxml2;
@@ -18,6 +18,8 @@ map<Direction,Direction> g_Opposite;
 map<XMLError,string> g_TinyXmlErrors;
 map<Direction,string> g_DirStr;
 Game * Game::m_pInstance = NULL;
+
+
 ////////////////////////////////////////////////////////////////////////////////
 Game::Game() : m_pCurrentRoom(NULL)
 {
@@ -62,9 +64,9 @@ Game::~Game()
 ////////////////////////////////////////////////////////////////////////////////
 void Game::Play()
 {
-	//initialize graphig window
+	// Initialize window
 	Init("Quick Escape", 1000, 700);
-
+  
   LoadMap("res/dungeon0.xml");
   CommandUtils::Load("res/commands.xml");
   for( auto a : m_Rooms )
@@ -76,13 +78,15 @@ void Game::Play()
       throw NullKeyException(ss.str());
     }
   }
+ 
 
-  cout << m_Story << "\n";
+   cout << m_Story << "\n";
 
   while ( GetProperty("running") ) 
   {
-	  Update();
+	
 	  Render();
+	  Update();
 
     Room & room = *GetCurrentRoom();
     bool visited;
@@ -93,10 +97,10 @@ void Game::Play()
       room.SetProperty("visited", true);
     }  
 
-	HandleInput(); //we handle the input from user
-
-  }  
-
+	HandleInput();
+   
+    
+  }
   Save("res/dungeon0.xml");
 
 }
@@ -416,10 +420,10 @@ Game::Execute(MoveCommand & cmd)
       GetCurrentRoom()->Execute(cmd);
       SetCurrentRoom(pNext);
       GetCurrentRoom()->Execute(cmd);
-	  
+
 	  //Player moves on screen
-	  if (cmd.m_Dir == North){
-		  playerRect.y -= playerRect.h;
+	  if (cmd.m_Dir==North){
+		 playerRect.y -= playerRect.h;
 	  }
 	  if (cmd.m_Dir == South){
 		  playerRect.y += playerRect.h;

@@ -31,4 +31,4 @@ public:
 	void Render(SDL_Renderer * renerer);
 	void OnEvent(SDL_Event & ev);
 };
-#endif 
+#endif // !__intro_scene_h__

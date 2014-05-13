@@ -6,12 +6,12 @@
 #include "Updateable.h"
 #include <PropertyHolder.h>
 class Scene : public Updateable,
-	public PropertyHolder
+			  public PropertyHolder 
 {
 protected:
-	std::string name_;
-	float alpha;
-	float timer;
+std::string name_;	
+float alpha;
+float timer;
 public:
 	void SetName(const std::string & name);
 	const std::string GetName();
@@ -22,4 +22,4 @@ public:
 
 
 };
-#endif 
+#endif // !__Scene_h__

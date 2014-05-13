@@ -11,7 +11,7 @@ class SDLApp
 protected:
 	SDL_Window * window_;
 	SDL_Renderer * renderer_;
-	SDL_GameController * controller;
+	SDL_GameController  * controller;
 	std::map<std::string, Scene *> scenes_;
 	Scene * currentScene_;
 	Uint32 time_;
@@ -21,7 +21,7 @@ protected:
 public:
 	SDLApp();
 	virtual ~SDLApp();
-
+	
 
 	void Init(const std::string & title, int width, int height,
 		int flags = SDL_WINDOW_SHOWN);

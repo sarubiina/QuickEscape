@@ -7,7 +7,7 @@ using namespace tinyxml2;
 void
 GameScene::Init(SDL_Renderer * renderer) {
 	// Create book cover, pages and player textures and rects for them
-	player_ = IMG_LoadTexture(renderer, "res/ninja.png");
+	player_ = IMG_LoadTexture(renderer, "res/player0.png");
 	if (player_ == NULL) {
 		throw runtime_error(IMG_GetError());
 	}
@@ -28,7 +28,7 @@ GameScene::Init(SDL_Renderer * renderer) {
 		throw runtime_error(SDL_GetError());
 	}
 
-
+	
 
 	XMLDocument doc;
 	doc.LoadFile("res/font.xml");
@@ -102,28 +102,28 @@ GameScene::Init(SDL_Renderer * renderer) {
 	// Create source Rect for player
 	int playerW, playerH;
 	SDL_QueryTexture(player_, NULL, NULL, &playerW, &playerH);
-	srcPlayerRect.w = playerW;
-	srcPlayerRect.h = playerH;
-	srcPlayerRect.x = 0;
-	srcPlayerRect.y = 0;
+	srcPlayerRect.w = 16;
+	srcPlayerRect.h = 16;
+	srcPlayerRect.x = 112;
+	srcPlayerRect.y = 16;
 
 	// set players destination vectors size and position
-	Game::GetInstance()->playerRect.w = playerW * 2;
-	Game::GetInstance()->playerRect.h = playerH * 2;
-	Game::GetInstance()->playerRect.x = 500;
+	Game::GetInstance()->playerRect.w = srcPlayerRect.w * 2;
+	Game::GetInstance()->playerRect.h = srcPlayerRect.h * 2;
+	Game::GetInstance()->playerRect.x = 750;
 	Game::GetInstance()->playerRect.y = 350;
 	text = "Hi everybody!\n";
 	leftPage << text;
-
+	
 	timer = 0;
 }
 
 void
-GameScene::Render(SDL_Renderer * renderer) {
+GameScene::Render(SDL_Renderer *  renderer) {
 
 	leftPage.Compose(font);
 	leftPage.RenderContent(renderer);
-
+	
 	//Render text to renderToTexture
 	SDL_SetRenderTarget(renderer, renderToTexture);
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
@@ -165,11 +165,11 @@ GameScene::Update(float seconds) {
 	}
 
 	while (timer > 4) {
-
+	
 		leftPage << "Oh, hullo!\n";
 		timer = 0;
 	}
-
+	
 }
 
 void

@@ -15,23 +15,23 @@ SDLApp::SDLApp(){
 		throw runtime_error(SDL_GetError());
 	}
 
-	// Initialize SDL_image
-	int initFlags = IMG_INIT_JPG | IMG_INIT_PNG;
-	int retFlags = IMG_Init(initFlags);
+		// Initialize SDL_image
+		int initFlags = IMG_INIT_JPG | IMG_INIT_PNG;
+		int retFlags = IMG_Init(initFlags);
 
-	if (retFlags != initFlags){
-		throw runtime_error(IMG_GetError());
-	}
-	// make pointers safe
-	window_ = NULL;
-	renderer_ = NULL;
-	if (SDL_GameControllerOpen(0) != NULL){
-		controller = SDL_GameControllerOpen(0);
-		SDL_GameControllerEventState(SDL_ENABLE);
-	}
-	currentScene_ = NULL;
-	seconds = 0;
-	timer = 0;
+		if (retFlags != initFlags){
+			throw runtime_error(IMG_GetError());
+		}
+		// make pointers safe
+		window_ = NULL;
+		renderer_ = NULL;
+		if (SDL_GameControllerOpen(0) != NULL){
+			controller = SDL_GameControllerOpen(0);
+			SDL_GameControllerEventState(SDL_ENABLE);
+		}
+		currentScene_ = NULL;
+		seconds = 0;
+		timer = 0;
 
 	time_ = SDL_GetTicks();
 
@@ -69,11 +69,11 @@ int flags) {
 	AddScene(intro);
 	SetCurrentScene("intro");
 
-	//GameScene * game = new GameScene();
-	//game->Init(renderer_);
-	//game->SetName("game");
-	//AddScene(game);
-
+	GameScene * game = new GameScene();
+	game->Init(renderer_);
+	game->SetName("game");
+	AddScene(game);
+	
 
 }
 
@@ -97,7 +97,7 @@ SDLApp::HandleInput() {
 			controller = SDL_GameControllerOpen(0);
 			SDL_GameControllerEventState(SDL_ENABLE);
 			break;
-		case SDL_QUIT:
+		case SDL_QUIT: 
 			Game::GetInstance()->GetProperty("running").SetValue(false);
 			break;
 		case SDL_KEYDOWN: case SDL_CONTROLLERBUTTONDOWN:

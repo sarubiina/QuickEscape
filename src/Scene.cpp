@@ -2,32 +2,32 @@
 #include <iostream>
 
 
-void
+void 
 Scene::SetName(const std::string & name) {
 	name_ = name;
 }
 
-const
+const 
 std::string Scene::GetName() {
 	return name_;
 }
 
-void
+void 
 Scene::Init(SDL_Renderer * renderer) {
 
 }
 
-void
+void 
 Scene::Render(SDL_Renderer * renderer) {
-
+	
 }
 
 void
 Scene::Update(float seconds) {
-
+	
 }
 
-void
+void 
 Scene::OnEvent(SDL_Event & ev) {
 
 }
