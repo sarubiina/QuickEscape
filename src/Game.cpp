@@ -9,7 +9,7 @@
 #include <Room.h>
 #include <RoomFactory.h>
 #include <Logger.h>
-#include "SDLApp.h"
+#include <SDL.h>
 ////////////////////////////////////////////////////////////////////////////////
 using namespace std;
 using namespace tinyxml2;
@@ -80,14 +80,11 @@ void Game::Play()
   }
  
 
-   cout << m_Story << "\n";
+   *page_ << m_Story << "\n";
+   page_->SetDirty(true);
 
   while ( GetProperty("running") ) 
   {
-	
-	  Render();
-	  Update();
-
     Room & room = *GetCurrentRoom();
     bool visited;
     
@@ -98,7 +95,8 @@ void Game::Play()
     }  
 
 	HandleInput();
-   
+	Render();
+	Update();
     
   }
   Save("res/dungeon0.xml");
@@ -397,113 +395,4 @@ Game::GetRooms()
 {
   return m_Rooms;
 }
-////////////////////////////////////////////////////////////////////////////////
-void 
-Game::Execute(QuitCommand & cmd)
-{
-  SetProperty("running", false);
-}
-////////////////////////////////////////////////////////////////////////////////
-void
-Game::Execute(MoveCommand & cmd)
-{
-  if ( cmd.m_Dir == kNumDirs )
-  {
-    cout << "You want to move ... where?\n";
-  } 
-  else 
-  {
-    Room *pNext = GetCurrentRoom()->GetNextRoom(cmd.m_Dir);
-    if ( pNext ) 
-    {
-      // Handle move commands in both rooms
-      GetCurrentRoom()->Execute(cmd);
-      SetCurrentRoom(pNext);
-      GetCurrentRoom()->Execute(cmd);
-
-	  //Player moves on screen
-	  if (cmd.m_Dir==North){
-		 playerRect.y -= playerRect.h;
-	  }
-	  if (cmd.m_Dir == South){
-		  playerRect.y += playerRect.h;
-	  }
-	  if (cmd.m_Dir == West){
-		  playerRect.x -= playerRect.w;
-	  }
-	  if (cmd.m_Dir == East){
-		  playerRect.x += playerRect.w;
-	  }
-    }
-    else
-    {
-      cout << "You bump your head on the wall. You can't go that way.\n";
-    }
-  }
-}
-////////////////////////////////////////////////////////////////////////////////
-void
-Game::Execute( UnknownCommand & cmd)
-{
-  cout << "Sorry, I did not quite get that.\n";
-}
-////////////////////////////////////////////////////////////////////////////////
-void
-Game::Execute( TakeCommand & cmd )
-{
-  GetCurrentRoom()->Execute(cmd);
-}
-////////////////////////////////////////////////////////////////////////////////
-void
-Game::Execute( DropCommand & cmd)
-{
-  GetCurrentRoom()->Execute(cmd);
-}
-////////////////////////////////////////////////////////////////////////////////
-void
-Game::Execute( InventoryCommand & cmd)
-{
-  m_Player.Execute(cmd);
-}
-////////////////////////////////////////////////////////////////////////////////
-void
-Game::Execute( LookCommand & cmd )
-{
-  GetCurrentRoom()->Execute(cmd);
-}
-////////////////////////////////////////////////////////////////////////////////
-void
-Game::Execute( ExamineCommand & cmd )
-{
-  try 
-  {
-    m_Player.Execute(cmd);
-  } 
-  catch ( ExamineCommandFailOnPlayerException & ex )
-  {
-    GetCurrentRoom()->Execute(cmd);
-  }
-
-}
-////////////////////////////////////////////////////////////////////////////////
-void
-Game::Execute( UseCommand & cmd )
-{
-  // try player's inventory use first
-  try {
-    m_Player.Execute(cmd);
-  } 
-  catch( UseCommandFailOnPlayerException & ex )
-  {
-    // no go, try from room instead.
-    GetCurrentRoom()->Execute(cmd);
-  }
-}
-////////////////////////////////////////////////////////////////////////////////
-void
-Game::Execute( NullCommand & cmd )
-{
-  
-}
-////////////////////////////////////////////////////////////////////////////////
 

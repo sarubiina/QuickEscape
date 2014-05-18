@@ -140,13 +140,13 @@ Room::Execute(MoveCommand & cmd)
     if ( HasProperty("deadly") && GetProperty("deadly").As<bool>() )
     {
       // Report death message attached to room
-      cout << GetProperty("deathmessage").As<string>() <<  "\n";
+	  *g_Game.page_ << GetProperty("deathmessage").As<string>() << "\n";
       g_Game.SetProperty("running", false);
     }
     else 
     {
-      cout << "\n" << GetName() << "\n";
-      cout << GetEnterMessage() << "\n";
+		*g_Game.page_ << "\n" << GetName() << "\n";
+		*g_Game.page_ << GetEnterMessage() << "\n";
 
 
       list<string> items;
@@ -158,29 +158,29 @@ Room::Execute(MoveCommand & cmd)
     
       if ( items.empty()) 
       {
-	cout << "There seems to be nothing in the room.";
+		  *g_Game.page_ << "There seems to be nothing in the room.";
       }
       else 
       {
-	cout << "You can see " << Game::MakeReadable(items) << " in here.";    
+		  *g_Game.page_ << "You can see " << Game::MakeReadable(items) << " in here.";
       }
     }
 	
   }
   else 
   {
-    cout << "You leave " << GetName() << ".";
+	  *g_Game.page_ << "You leave " << GetName() << ".";
     if ( cmd.m_Dir == South && HasProperty("south_exit_message") )
-      cout << GetProperty("south_exit_message").As<string>() << ".";
+		*g_Game.page_ << GetProperty("south_exit_message").As<string>() << ".";
     if ( cmd.m_Dir == West && HasProperty("west_exit_message") )
-      cout << GetProperty("west_exit_message").As<string>() << ".";
+		*g_Game.page_ << GetProperty("west_exit_message").As<string>() << ".";
     if ( cmd.m_Dir == North && HasProperty("north_exit_message") )
-      cout << GetProperty("north_exit_message").As<string>() << ".";
+		*g_Game.page_ << GetProperty("north_exit_message").As<string>() << ".";
     if ( cmd.m_Dir == East && HasProperty("east_exit_message") )
-      cout << GetProperty("east_exit_message").As<string>() << ".";
+		*g_Game.page_ << GetProperty("east_exit_message").As<string>() << ".";
   }
-  cout << "\n";
-
+  *g_Game.page_ << "\n";
+  g_Game.page_->SetDirty(true);
 }
 
 
@@ -200,7 +200,7 @@ Room::Execute( TakeCommand & cmd )
   {
     items.remove(item);
     g_Game.GetPlayer().GetItems().push_back(item);
-    cout << "You picked up " << item->GetName() << "\n";
+	*g_Game.page_ << "You picked up " << item->GetName() << "\n";
 
     // Quick hack for picking up torch, staircase becomes safe.
     if ( item->GetId() == "ID_TORCH" )
@@ -211,12 +211,13 @@ Room::Execute( TakeCommand & cmd )
   } 
   else if ( cmd.m_strWhat.empty())
   {
-    cout << "Can you be more specific?\n";
+	  *g_Game.page_ << "Can you be more specific?\n";
   }
   else 
   {
-    cout << "There is no such item.\n";
+	  *g_Game.page_ << "There is no such item.\n";
   }
+  g_Game.page_->SetDirty(true);
 }
 ////////////////////////////////////////////////////////////////////////////////
 void
@@ -233,12 +234,13 @@ Room::Execute( DropCommand & cmd)
     {
       g_Game.GetRooms()["RID_STAIRS_DARKNESS"]->SetProperty("deadly", true);
     }
-    cout << "You dropped " << item->GetName() << "\n";
+	*g_Game.page_ << "You dropped " << item->GetName() << "\n";
   }
   else 
   {
-    cout << "You do not have such item.\n";
+	  *g_Game.page_ << "You do not have such item.\n";
   }
+  g_Game.page_->SetDirty(true);
 }
 ////////////////////////////////////////////////////////////////////////////////
 void
@@ -250,10 +252,10 @@ Room::Execute( InventoryCommand & cmd)
 void
 Room::Execute( LookCommand & cmd )
 {
-  cout << "\n" << GetName() << "\n";
-  cout << "\n" << GetEnterMessage() << "\n";
+	*g_Game.page_ << "\n" << GetName() << "\n";
+	*g_Game.page_ << "\n" << GetEnterMessage() << "\n";
   
-  cout << "From here you can go ";
+	*g_Game.page_ << "From here you can go ";
   list<string> directions;
     
   if ( GetNextRoom(North)) directions.push_back("north");
@@ -261,7 +263,8 @@ Room::Execute( LookCommand & cmd )
   if ( GetNextRoom(South)) directions.push_back("south");
   if ( GetNextRoom(West))  directions.push_back("west");
 
-  cout << Game::MakeReadable(directions) << ".\n";
+  *g_Game.page_ << Game::MakeReadable(directions) << ".\n";
+  g_Game.page_->SetDirty(true);
 }
 ////////////////////////////////////////////////////////////////////////////////
 void
@@ -271,11 +274,11 @@ Room::Execute( ExamineCommand & cmd )
   Room & room  = *this;
   if ( !cmd.HasTarget() )
   { 
-    cout << "Examine what? ";
+	  *g_Game.page_ << "Examine what? ";
   }
   else if ( cmd.m_strTarget == "room" )
   {
-    cout << room.GetDescription() << "\n";
+	  *g_Game.page_ << room.GetDescription() << "\n";
     list<string> items;
     for(auto item : room.GetItems()) 
     {
@@ -283,27 +286,29 @@ Room::Execute( ExamineCommand & cmd )
     }
     if ( items.empty()) 
     {
-      cout << "There seems to be nothing in the room. ";
+		*g_Game.page_ << "There seems to be nothing in the room. ";
     }
     else 
     {
-      cout << "You can see " << Game::MakeReadable(items) << " in here.";    
+		*g_Game.page_ << "You can see " << Game::MakeReadable(items) << " in here.";
     }
   } 
   else  
   {
     // examining room items.
     GameObject * item = GetItems()[cmd.m_strTarget];
-    if ( item ) cout << "It appears to be " << item->GetDescription() << ". ";
-    else     cout << "I do not know how to examine " << cmd.m_strTarget << ". ";
+	if (item) *g_Game.page_ << "It appears to be " << item->GetDescription() << ". ";
+	else     *g_Game.page_ << "I do not know how to examine " << cmd.m_strTarget << ". ";
   }
-  cout << "\n";
+  *g_Game.page_ << "\n";
+  g_Game.page_->SetDirty(true);
 }
 ////////////////////////////////////////////////////////////////////////////////
 void
 Room::Execute( UseCommand & cmd )
 {
-  cout << "You are not making any sense.\n";
+	*g_Game.page_ << "You are not making any sense.\n";
+	g_Game.page_->SetDirty(true);
 }
 ////////////////////////////////////////////////////////////////////////////////
 void

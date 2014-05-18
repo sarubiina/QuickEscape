@@ -4,8 +4,11 @@
 #include <SDL.h>
 class IntroScene : public Scene {
 protected:
-	SDL_Texture * splash_;
+	SDL_Texture * splash_{ NULL };
+	float alpha_{ 0.0f };
+	bool fading_{ false };
 public:
+	virtual ~IntroScene();
 	void Init(SDL_Renderer * renderer);
 	void Update(float seconds);
 	void Render(SDL_Renderer * renerer);

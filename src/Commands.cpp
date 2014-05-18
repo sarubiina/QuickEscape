@@ -58,46 +58,41 @@ CommandUtils::Match( const std::string & cmd, const std::string & input)
 // User inpit using keybioard commands via SDL
 Command *
 CommandUtils::Parse(const SDL_Event & event)
-{	
-	
-		switch (event.type)
+{
+	Room *current = g_Game.GetCurrentRoom();
+	switch (event.type)
+	{
+	case SDL_QUIT:
+		return new QuitCommand();
+		break;
+	case SDL_KEYDOWN:
+		if (!event.key.repeat)
 		{
-		case SDL_QUIT:
-			return new QuitCommand();
-			break;
-		case SDL_KEYDOWN: case SDL_CONTROLLERBUTTONDOWN:
-			if (event.key.keysym.sym == SDLK_ESCAPE || event.cbutton.button == SDL_CONTROLLER_BUTTON_BACK){
+			switch (event.key.keysym.sym)
+			{
+			case SDLK_w:
+			case SDLK_UP:
+				return new MoveCommand(North, current, current->GetNextRoom(North));
+				break;
+			case SDLK_d:
+			case SDLK_RIGHT:
+				return new MoveCommand(East, current, current->GetNextRoom(East));
+				break;
+			case SDLK_s:
+			case SDLK_DOWN:
+				return new MoveCommand(South, current, current->GetNextRoom(South));
+				break;
+			case SDLK_a:
+			case SDLK_LEFT:
+				return new MoveCommand(West, current, current->GetNextRoom(West));
+				break;
+			case SDLK_ESCAPE:
 				return new QuitCommand();
+				break;
 			}
-			if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_w || event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP){
-				Room *current = g_Game.GetCurrentRoom();
-				MoveCommand *pCmd = new MoveCommand(North, current, current->GetNextRoom(North));
-				return pCmd;
-
-			}
-			if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_s || event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_DOWN){
-				Room *current = g_Game.GetCurrentRoom();
-				MoveCommand *pCmd = new MoveCommand(South, current, current->GetNextRoom(South));
-				return pCmd;
-			}
-			if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a || event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_LEFT){
-				Room *current = g_Game.GetCurrentRoom();
-				MoveCommand *pCmd = new MoveCommand(West, current, current->GetNextRoom(West));
-				return pCmd;
-			}
-			if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d || event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT){
-				Room *current = g_Game.GetCurrentRoom();
-				MoveCommand *pCmd = new MoveCommand(East, current, current->GetNextRoom(East));
-				return pCmd;
-			}
-			if (event.key.keysym.sym == SDLK_q || event.cbutton.button == SDL_CONTROLLER_BUTTON_Y){
-				return new LookCommand();
-			}
-			break;
-		
+		}
 	}
 	return new NullCommand();
-	
 }
 
 

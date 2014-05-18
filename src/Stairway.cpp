@@ -15,8 +15,9 @@ Stairway::Execute( MoveCommand & cmd )
        g_Game.GetPlayer().GetItems()["torch"] == NULL )
   {
     // Report death message attached to room
-    cout << GetProperty("deathmessage").As<string>() <<  "\n";
+    *g_Game.page_ << GetProperty("deathmessage").As<string>() <<  "\n";
     g_Game.SetProperty("running", false);
+	g_Game.page_->SetDirty(true);
   }
   else
   {

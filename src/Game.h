@@ -13,14 +13,14 @@
 #include <Player.h>
 #include <PropertyHolder.h>
 #include <Commands.h>
-#include "SDLApp.h"
+#include <SDLApp.h>
 ////////////////////////////////////////////////////////////////////////////////
 class IRenderer;
 class Room;
 typedef std::map<std::string, Room *> Rooms;
 ////////////////////////////////////////////////////////////////////////////////
 class Game : public PropertyHolder,
-	     public CommandHandler, public SDLApp
+	         public SDLApp
 {
 private:
   Rooms       m_Rooms;
@@ -47,16 +47,7 @@ public:
   Player & GetPlayer();
   Rooms &  GetRooms();
   
-  void Execute( UseCommand & cmd );
-  void Execute( ExamineCommand & cmd);
-  void Execute( QuitCommand & cmd);
-  void Execute( MoveCommand & cmd);
-  void Execute( UnknownCommand & cmd);
-  void Execute( TakeCommand & cmd);
-  void Execute( DropCommand & cmd);
-  void Execute( InventoryCommand & cmd);
-  void Execute( LookCommand & cmd);
-  void Execute( NullCommand & cmd);
+
 };
 ////////////////////////////////////////////////////////////////////////////////
 #endif
