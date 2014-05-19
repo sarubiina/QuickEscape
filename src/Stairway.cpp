@@ -16,7 +16,11 @@ Stairway::Execute( MoveCommand & cmd )
   {
     // Report death message attached to room
     *g_Game.page_ << GetProperty("deathmessage").As<string>() <<  "\n";
-    g_Game.SetProperty("running", false);
+	Mix_PlayChannel(-1, g_Game.sound_["yell"], 0);
+	SDL_Delay(1000);
+	Mix_PlayChannel(-1, g_Game.sound_["squish"], 0);
+	g_Game.SetProperty("running", false);
+	Mix_FadeOutMusic(3000);
 	g_Game.page_->SetDirty(true);
   }
   else

@@ -20,5 +20,7 @@ public:
 	virtual void Render(SDL_Renderer * renderer);
 	virtual void Update(float seconds);
 	virtual void OnEvent(SDL_Event & ev);
+	virtual void OnEnter();
+	virtual void OnExit();
 };
 #endif // !__Scene_h__

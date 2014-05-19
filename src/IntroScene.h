@@ -13,5 +13,6 @@ public:
 	void Update(float seconds);
 	void Render(SDL_Renderer * renerer);
 	void OnEvent(SDL_Event & ev);
+	void OnEnter();
 };
 #endif // !__intro_scene_h__

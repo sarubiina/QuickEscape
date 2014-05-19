@@ -10,6 +10,7 @@
 #include <RoomFactory.h>
 #include <Logger.h>
 #include <SDL.h>
+#include <SDL_mixer.h>
 ////////////////////////////////////////////////////////////////////////////////
 using namespace std;
 using namespace tinyxml2;
@@ -83,8 +84,10 @@ void Game::Play()
    *page_ << m_Story << "\n";
    page_->SetDirty(true);
 
-  while ( GetProperty("running") ) 
+   while ((bool) GetProperty("running") || (Mix_PlayingMusic()) || (Mix_Playing(-1) > 0))
   {
+	bool running = GetProperty("running");
+
     Room & room = *GetCurrentRoom();
     bool visited;
     

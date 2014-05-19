@@ -142,9 +142,11 @@ GameScene::Update(float seconds)
 void
 GameScene::OnEvent(SDL_Event & ev) 
 {
-	switch (ev.type) {
+	switch (ev.type) 
+	{
 	case SDL_QUIT:
 		Game::GetInstance()->GetProperty("running").SetValue(false);
+		Mix_FadeOutMusic(3000);
 		break;
 	case SDL_KEYDOWN:
 		Command *pCmd = CommandUtils::Parse(ev);
@@ -195,10 +197,12 @@ GameScene::Execute(MoveCommand & cmd)
 			default:
 				break;
 			}
+			Mix_PlayChannel(-1, Game::GetInstance()->sound_["step"], 0);
 		}
 		else
 		{
 			*page_ << "You bump your head on the wall. You can't go that way.\n";
+			Mix_PlayChannel(-1, Game::GetInstance()->sound_["wall"], 0);
 		}
 	}
 	page_->SetDirty(true);

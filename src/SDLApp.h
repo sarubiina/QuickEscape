@@ -2,6 +2,7 @@
 #define __SDLApp_h__
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include <string>
 #include <Command.h>
 #include <map>
@@ -27,6 +28,9 @@ public:
 	void Render();
 	void Update();
 	void HandleInput();
+
+	std::map<std::string, Mix_Music *> music_;
+	std::map<std::string, Mix_Chunk *> sound_;
 
 	void AddScene(Scene * scene);
 	void DeleteScene(const std::string & name);
