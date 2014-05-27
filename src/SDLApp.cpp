@@ -126,6 +126,11 @@ int flags)
 			throw runtime_error(Mix_GetError());
 		sound_["squish"] = sound;
 
+	sound = Mix_LoadWAV("res/flippage.wav");
+		if (sound == NULL)
+			throw runtime_error(Mix_GetError());
+		sound_["flippage"] = sound;
+
 	//add intro scene
 	IntroScene * intro = new IntroScene();
 	intro->Init(renderer_);

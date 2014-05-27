@@ -18,15 +18,19 @@ void
 GameScene::Init(SDL_Renderer * renderer) 
 {
 	// Create book cover, pages and player textures and rects for them
-	
-	pages_ = IMG_LoadTexture(renderer, "res/pages.png");
-	if (pages_ == NULL)
-		throw runtime_error(SDL_GetError());
-	
 	bookcover_ = IMG_LoadTexture(renderer, "res/cover.png");
 	if (bookcover_ == NULL)
-		throw runtime_error(SDL_GetError());
-	
+		throw runtime_error(IMG_GetError());
+
+	for (int i = 0; i < NUM_PAGE_ANIM_FRAMES; i++)
+	{
+		ostringstream ss;
+		ss << "res/book/page0" << i + 1 << ".png";
+		pages_[i] = IMG_LoadTexture(renderer, ss.str().c_str());
+		if (pages_[i] == NULL)
+			throw runtime_error(IMG_GetError());
+	}
+
 	character_ = IMG_LoadTexture(renderer, "res/player0.png");
 	if (character_ == NULL) 
 		throw runtime_error(IMG_GetError());
@@ -41,7 +45,7 @@ GameScene::Init(SDL_Renderer * renderer)
 	pos_ = player_;
 
 	SDL_GetWindowSize(Game::GetInstance()->GetWindow(), &pos_.x, &pos_.y);
-	pos_.x /= 2;
+	pos_.x = 800;
 	pos_.y /= 2;
 	pos_.w *= 2;
 	pos_.h *= 2;
@@ -76,6 +80,7 @@ GameScene::Init(SDL_Renderer * renderer)
 		stringstream ss(size);
 		int fontsize;
 		if (!(ss >> fontsize)) throw runtime_error("cannot convert from font size to int");
+		
 		tmp = TTF_OpenFont(path, fontsize);
 		if (tmp == NULL) throw runtime_error(TTF_GetError());
 		fonts_[name] = tmp;
@@ -88,8 +93,21 @@ GameScene::Init(SDL_Renderer * renderer)
 	page_->fillMode_ = FillMode::Tail;
 	page_->_justification = Justification::Left;
 	page_->Init(renderer, 412, 612); //size
-	*page_ << "hello world";
-	page_->SetDirty(true);
+
+	titlePage_ = new Page();
+	titlePage_->fillMode_ = FillMode::Head;
+	titlePage_->_justification = Justification::Center;
+	titlePage_->Init(renderer, 412, 612); //size
+	*titlePage_ << "Quick Escape by Anssi Grohn";
+	titlePage_->SetDirty(true);
+
+	endPage_ = new Page();
+	endPage_->fillMode_ = FillMode::Head;
+	endPage_->_justification = Justification::Center;
+	endPage_->Init(renderer, 412, 612); //size
+	*endPage_ << "The End - Leave or finnish the story?";
+	endPage_->SetDirty(true);
+
 	alpha_ = 255.0F;
 	fading_ = true;
 }
@@ -97,7 +115,15 @@ GameScene::Init(SDL_Renderer * renderer)
 GameScene::~GameScene()
 {
 	SDL_DestroyTexture(bookcover_);
-	SDL_DestroyTexture(pages_);
+	for (auto & e : pages_)
+	{
+		SDL_DestroyTexture(e);
+	}
+	SDL_DestroyTexture(character_);
+	for (auto & e : fonts_)
+	{
+		TTF_CloseFont(e.second);
+	}
 }
 ////////////////////////////////////////
 void
@@ -107,8 +133,12 @@ GameScene::Render(SDL_Renderer *  renderer)
 	SDL_RenderClear(renderer);
 
 	SDL_RenderCopy(renderer, bookcover_, NULL, NULL);
-	SDL_RenderCopy(renderer, pages_, NULL, NULL);
-	SDL_RenderCopy(renderer, character_, &player_, &pos_);
+
+	SDL_Rect pageDest{ 30, 45, 940, 630 };
+	SDL_RenderCopy(renderer, pages_[(int)pageFrame_], NULL, &pageDest);
+
+	SDL_Rect d = { 50, 50, 390, 570 };
+	
 
 	if (page_->IsDirty())
 	{
@@ -116,8 +146,31 @@ GameScene::Render(SDL_Renderer *  renderer)
 		page_->RenderContent(renderer);
 		page_->SetDirty(false);
 	}
-	SDL_Rect d = { 50, 50, 390, 570 };
-	SDL_RenderCopy(renderer, page_->_pageTexture, NULL, &d);
+	if (titlePage_->IsDirty())
+	{
+		titlePage_->Compose(fonts_["title"]);
+		titlePage_->RenderContent(renderer);
+		titlePage_->SetDirty(false);
+	}
+	if (endPage_->IsDirty())
+	{
+		endPage_->Compose(fonts_["special"]);
+		endPage_->RenderContent(renderer);
+		endPage_->SetDirty(false);
+	}
+	if (pageToShow_ == 0)
+	{
+		SDL_RenderCopy(renderer, titlePage_->_pageTexture, NULL, &d);
+	}
+	else if (pageToShow_ == 1)
+	{
+		SDL_RenderCopy(renderer, page_->_pageTexture, NULL, &d);
+		SDL_RenderCopy(renderer, character_, &player_, &pos_);
+	}
+	else if (pageToShow_ == 2)
+	{
+		SDL_RenderCopy(renderer, endPage_->_pageTexture, NULL, &d);
+	}
 	if (fading_)
 	{
 		int h, w;
@@ -137,23 +190,54 @@ GameScene::Update(float seconds)
 		//when alpha value is completely white
 		if (alpha_ <= 0.001f) fading_ = false;
 	}
+	if (pageTurning_)
+	{
+		pageFrame_ += seconds*2.5f;
+		Mix_PlayChannel(0, Game::GetInstance()->sound_["flippage"], 0);
+		if (pageFrame_ > 5.0f)
+		{
+			pageTurning_ = false;
+			pageFrame_ = 0.0f;
+			pageToShow_++;
+		}
+	}
+	if (pageTurningLeft_)
+	{
+		pageFrame_ -= seconds*2.5f;
+		Mix_PlayChannel(0, Game::GetInstance()->sound_["flippage"], 0);
+		if (pageFrame_ < 0.0f)
+		{
+			pageTurningLeft_ = false;
+			pageTurning_ = false;
+			pageFrame_ = 0.0f;
+			pageToShow_--;
+		}
+	}
 }
 ////////////////////////////////////////
 void
 GameScene::OnEvent(SDL_Event & ev) 
 {
-	switch (ev.type) 
+	if (ev.type == SDL_QUIT)
 	{
-	case SDL_QUIT:
 		Game::GetInstance()->GetProperty("running").SetValue(false);
 		Mix_FadeOutMusic(3000);
-		break;
-	case SDL_KEYDOWN:
-		Command *pCmd = CommandUtils::Parse(ev);
-		pCmd->Execute(*this);
-		delete pCmd;
-		break;
 	}
+	if(ev.type == SDL_KEYDOWN)
+	{
+		if (ev.key.keysym.sym == SDLK_SPACE)
+		{
+			pageTurning_ = true;
+		}
+		if (ev.key.keysym.sym == SDLK_b)
+		{
+			pageTurningLeft_ = true;
+			pageFrame_ = 5;
+		}
+	}
+	Command *pCmd = CommandUtils::Parse(ev);
+	pCmd->Execute(*this);
+	delete pCmd;
 }
 ////////////////////////////////////////////////////////////////////////////////
 void
