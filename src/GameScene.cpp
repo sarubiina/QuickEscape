@@ -50,6 +50,7 @@ GameScene::Init(SDL_Renderer * renderer)
 	pos_.w *= 2;
 	pos_.h *= 2;
 
+
 	//load fonts
 	XMLDocument fontDoc;
 	fontDoc.LoadFile("res/fonts.xml");
@@ -135,6 +136,7 @@ GameScene::Render(SDL_Renderer *  renderer)
 	SDL_RenderCopy(renderer, bookcover_, NULL, NULL);
 
 	SDL_Rect pageDest{ 30, 45, 940, 630 };
+	SDL_RenderCopy(renderer, pages_[0], NULL, &pageDest);
 	SDL_RenderCopy(renderer, pages_[(int)pageFrame_], NULL, &pageDest);
 
 	SDL_Rect d = { 50, 50, 390, 570 };
@@ -192,7 +194,7 @@ GameScene::Update(float seconds)
 	}
 	if (pageTurning_)
 	{
-		pageFrame_ += seconds*2.5f;
+		pageFrame_ += seconds*5.5f;
 		Mix_PlayChannel(0, Game::GetInstance()->sound_["flippage"], 0);
 		if (pageFrame_ > 5.0f)
 		{
@@ -203,7 +205,7 @@ GameScene::Update(float seconds)
 	}
 	if (pageTurningLeft_)
 	{
-		pageFrame_ -= seconds*2.5f;
+		pageFrame_ -= seconds*5.5f;
 		Mix_PlayChannel(0, Game::GetInstance()->sound_["flippage"], 0);
 		if (pageFrame_ < 0.0f)
 		{

@@ -7,6 +7,7 @@
 #include <string>
 #include <map>
 const int NUM_PAGE_ANIM_FRAMES = 6;
+
 class GameScene : public Scene,
 				  public NOPCommandHandler
 {
